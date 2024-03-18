@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenVerifyView, TokenRefreshView, TokenObtainPairView
+from .swagger_doc import urlpatterns as swagger_doc_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -12,3 +13,5 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
 
 ]
+
+urlpatterns += swagger_doc_urls
