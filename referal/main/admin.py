@@ -5,7 +5,7 @@ from .models import CustomUser, ReferralCode
 
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email', )
+    list_display = ('username', 'email', 'referrer_code')
 
 
 @admin.register(ReferralCode)

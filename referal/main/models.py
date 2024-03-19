@@ -3,7 +3,7 @@ from django.db import models
 
 
 class CustomUser(AbstractUser):
-    reference_code = models.CharField(max_length=20, verbose_name='Код реферера')
+    referrer_code = models.CharField(max_length=20, verbose_name='Код реферера')
 
 
 class ReferralCode(models.Model):

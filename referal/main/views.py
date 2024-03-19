@@ -55,7 +55,6 @@ class ReferralsListAPIView(ListAPIView):
     serializer_class = GetReferralsListSerializer
 
     def get_queryset(self):
-        referer_id = self.kwargs.get('referer_id')
-        print(referer_id)
-        referral_code = get_object_or_404(CustomUser, id=referer_id).referral_code.referral_code_title
-        return CustomUser.objects.filter(reference_code=referral_code)
+        referrer_id = self.kwargs.get('referrer_id')
+        referral_code = get_object_or_404(CustomUser, id=referrer_id).referral_code.referral_code_title
+        return CustomUser.objects.filter(referrer_code=referral_code)
