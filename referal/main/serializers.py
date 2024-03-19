@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import ReferralCode
+from .models import ReferralCode, CustomUser
 
 
 class CreateReferralCodeSerializer(serializers.ModelSerializer):
@@ -8,4 +8,12 @@ class CreateReferralCodeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ReferralCode
-        fields = ('user_id', 'reference_code', 'referral_due_date',)
+        fields = ('user_id', 'referral_code_title', 'referral_code_due_date',)
+
+
+class GetReferralCodeSerializer(serializers.ModelSerializer):
+    referral_code = serializers.CharField(source='referral_code.referral_code_title')
+
+    class Meta:
+        model = ReferralCode
+        fields = ('referral_code', )

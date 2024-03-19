@@ -10,4 +10,4 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 @admin.register(ReferralCode)
 class ReferralCodeAdmin(admin.ModelAdmin):
-    list_display = ('user', 'reference_code', 'referral_due_date')
+    list_display = ('user', 'referral_code_title', 'referral_code_due_date')
