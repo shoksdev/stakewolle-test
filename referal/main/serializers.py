@@ -13,7 +13,15 @@ class CreateReferralCodeSerializer(serializers.ModelSerializer):
 
 class GetReferralCodeSerializer(serializers.ModelSerializer):
     referral_code = serializers.CharField(source='referral_code.referral_code_title')
+    referral_code_due_date = serializers.CharField(source='referral_code.referral_code_due_date')
 
     class Meta:
         model = ReferralCode
-        fields = ('referral_code', )
+        fields = ('referral_code', 'referral_code_due_date')
+
+
+class GetReferralsListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'email', 'first_name', 'last_name',)

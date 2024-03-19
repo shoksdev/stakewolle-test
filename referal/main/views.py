@@ -1,10 +1,10 @@
 from django.db import IntegrityError
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, DestroyAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, DestroyAPIView, RetrieveAPIView, ListAPIView, get_object_or_404
 from rest_framework.response import Response
 
 from .models import ReferralCode, CustomUser
-from .serializers import CreateReferralCodeSerializer, GetReferralCodeSerializer
+from .serializers import CreateReferralCodeSerializer, GetReferralCodeSerializer, GetReferralsListSerializer
 
 
 class CreateReferralCodeAPIView(CreateAPIView):
@@ -49,3 +49,13 @@ class RetrieveReferralCodeAPIView(RetrieveAPIView):
         except CustomUser.DoesNotExist:
             return Response({'error': 'Пользователь с таким адресом электронной почты не найден'},
                             status=status.HTTP_404_NOT_FOUND)
+
+
+class ReferralsListAPIView(ListAPIView):
+    serializer_class = GetReferralsListSerializer
+
+    def get_queryset(self):
+        referer_id = self.kwargs.get('referer_id')
+        print(referer_id)
+        referral_code = get_object_or_404(CustomUser, id=referer_id).referral_code.referral_code_title
+        return CustomUser.objects.filter(reference_code=referral_code)
