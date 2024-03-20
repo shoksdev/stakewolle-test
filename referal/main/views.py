@@ -1,6 +1,7 @@
 from django.db import IntegrityError
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, DestroyAPIView, RetrieveAPIView, ListAPIView, get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import ReferralCode, CustomUser
@@ -8,8 +9,14 @@ from .serializers import CreateReferralCodeSerializer, GetReferralCodeSerializer
 
 
 class CreateReferralCodeAPIView(CreateAPIView):
+    """
+    Создаём реферальный код и обрабатываем ошибку если у пользователя уже есть реферальный код,
+    просим его удалить свой код
+    """
+
     queryset = ReferralCode.objects.all()
     serializer_class = CreateReferralCodeSerializer
+    permission_classes = [IsAuthenticated, ]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -26,13 +33,21 @@ class CreateReferralCodeAPIView(CreateAPIView):
 
 
 class DestroyReferralCodeAPIView(DestroyAPIView):
+    """Удаляем реферальный код пользователя"""
+
     queryset = ReferralCode.objects.all()
     serializer_class = CreateReferralCodeSerializer
+    permission_classes = [IsAuthenticated, ]
 
 
 class RetrieveReferralCodeAPIView(RetrieveAPIView):
+    """
+    Выводим реферальный код по email адресу реферера, обрабатываем ошибки если у пользователя нет кода/нет пользователя
+    """
+
     queryset = CustomUser.objects.all()
     serializer_class = GetReferralCodeSerializer
+    permission_classes = [IsAuthenticated, ]
     lookup_field = 'email'
 
     def retrieve(self, request, *args, **kwargs):
@@ -52,7 +67,10 @@ class RetrieveReferralCodeAPIView(RetrieveAPIView):
 
 
 class ReferralsListAPIView(ListAPIView):
+    """Выводим список всех рефералов по id реферера"""
+
     serializer_class = GetReferralsListSerializer
+    permission_classes = [IsAuthenticated, ]
 
     def get_queryset(self):
         referrer_id = self.kwargs.get('referrer_id')

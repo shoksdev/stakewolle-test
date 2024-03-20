@@ -12,7 +12,6 @@ urlpatterns = [
     path('social/auth/', include('drf_social_oauth2.urls', namespace='drf')),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
-    path('api-auth/', include('rest_framework.urls')),
 ]
 
 urlpatterns += swagger_doc_urls

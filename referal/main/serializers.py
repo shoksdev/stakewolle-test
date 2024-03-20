@@ -4,6 +4,8 @@ from .models import ReferralCode, CustomUser
 
 
 class CreateReferralCodeSerializer(serializers.ModelSerializer):
+    """Сериализатор для создания реферального кода"""
+
     user_id = serializers.IntegerField(read_only=True)
 
     class Meta:
@@ -12,6 +14,8 @@ class CreateReferralCodeSerializer(serializers.ModelSerializer):
 
 
 class GetReferralCodeSerializer(serializers.ModelSerializer):
+    """Серализатор для получения реферального кода и вывода информации о нем"""
+
     referral_code = serializers.CharField(source='referral_code.referral_code_title')
     referral_code_due_date = serializers.CharField(source='referral_code.referral_code_due_date')
 
@@ -21,6 +25,7 @@ class GetReferralCodeSerializer(serializers.ModelSerializer):
 
 
 class GetReferralsListSerializer(serializers.ModelSerializer):
+    """Сериализатор для обработки информации о всех пользователях с реферальным кодом"""
 
     class Meta:
         model = CustomUser
